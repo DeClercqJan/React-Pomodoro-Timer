@@ -4,17 +4,17 @@ import Header from "../components/Header";
 import Timer from "../components/Timer";
 // import CountdownTimer from "../components/CountdownTimer";
 
-const date1 = new Date();
+// DON'T NEED THIS ANYMORE AS I DID IT DIFFERENTLY
+/* const date1 = new Date();
 console.log(date1);
 const date2 = new Date();
 date2.setMinutes(date1.getMinutes() + 20);
 console.log(date2);
 // ik denk niet dat dit zal werken, want getMinutes geeft integer terug. Ik denk eerder dat ik zal moeten rekenen
-/*
-console.log(date);
-const twentyMinutes = date.getMinutes();
-console.log(twentyMinutes);
- */
+
+// console.log(date);
+// const twentyMinutes = date.getMinutes();
+// console.log(twentyMinutes);
 
 const calculateTimeLeft = (date1, date2) => {
   console.log(date1);
@@ -34,7 +34,7 @@ const calculateTimeLeft = (date1, date2) => {
 
   return timeLeft;
 };
-console.log(calculateTimeLeft(date1, date2));
+console.log(calculateTimeLeft(date1, date2)); */
 // let timeLeft = calculateTimeLeft(date1, date2);
 
 class App extends React.Component {
@@ -51,13 +51,24 @@ class App extends React.Component {
     };
   }
 
+  // https://reactjs.org/docs/state-and-lifecycle.html
   componentDidMount() {
-      // question: why timer? To not overload browser?
+    // question: why timer? To not overload browser?
+
+    // this on/off functionality needs to be added to button. Here I just put it on on (true) for now. Also see unmountfunction
+    console.log(this.state.timerRunning);
+    let timerRunningTrueOrFalse = this.state.timerRunning;
+    if (timerRunningTrueOrFalse) {
       this.timerID = setInterval(() => this.tick(), 1000);
+    }
   }
 
   componentWillUnmount() {
+    console.log(this.state.timerRunning);
+    let timerRunningTrueOrFalse = this.state.timerRunning;
+    if (timerRunningTrueOrFalse) {
       clearInterval(this.timerID);
+    }
   }
 
   tick() {

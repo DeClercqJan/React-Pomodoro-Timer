@@ -31857,40 +31857,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 // import CountdownTimer from "../components/CountdownTimer";
-var date1 = new Date();
+// DON'T NEED THIS ANYMORE AS I DID IT DIFFERENTLY
+
+/* const date1 = new Date();
 console.log(date1);
-var date2 = new Date();
+const date2 = new Date();
 date2.setMinutes(date1.getMinutes() + 20);
-console.log(date2); // ik denk niet dat dit zal werken, want getMinutes geeft integer terug. Ik denk eerder dat ik zal moeten rekenen
+console.log(date2);
+// ik denk niet dat dit zal werken, want getMinutes geeft integer terug. Ik denk eerder dat ik zal moeten rekenen
 
-/*
-console.log(date);
-const twentyMinutes = date.getMinutes();
-console.log(twentyMinutes);
- */
+// console.log(date);
+// const twentyMinutes = date.getMinutes();
+// console.log(twentyMinutes);
 
-var calculateTimeLeft = function calculateTimeLeft(date1, date2) {
+const calculateTimeLeft = (date1, date2) => {
   console.log(date1);
-  console.log(date2); // const difference = +new Date("2020-01-01") - +new Date();
-
-  var difference = date2 - date1;
-  var timeLeft = {};
+  console.log(date2);
+  // const difference = +new Date("2020-01-01") - +new Date();
+  const difference = date2 - date1;
+  let timeLeft = {};
   console.log(difference);
-
   if (difference > 0) {
     timeLeft = {
       // days: Math.floor(difference / (1000 * 60 * 60 * 24)),
       // hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor(difference / 1000 / 60 % 60),
-      seconds: Math.floor(difference / 1000 % 60)
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60)
     };
   }
 
   return timeLeft;
 };
-
-console.log(calculateTimeLeft(date1, date2)); // let timeLeft = calculateTimeLeft(date1, date2);
-
+console.log(calculateTimeLeft(date1, date2)); */
+// let timeLeft = calculateTimeLeft(date1, date2);
 var App =
 /*#__PURE__*/
 function (_React$Component) {
@@ -31912,7 +31911,8 @@ function (_React$Component) {
       timerEnded: false
     };
     return _this;
-  }
+  } // https://reactjs.org/docs/state-and-lifecycle.html
+
 
   _createClass(App, [{
     key: "componentDidMount",
@@ -31920,14 +31920,25 @@ function (_React$Component) {
       var _this2 = this;
 
       // question: why timer? To not overload browser?
-      this.timerID = setInterval(function () {
-        return _this2.tick();
-      }, 1000);
+      // this on/off functionality needs to be added to button. Here I just put it on on (true) for now. Also see unmountfunction
+      console.log(this.state.timerRunning);
+      var timerRunningTrueOrFalse = this.state.timerRunning;
+
+      if (timerRunningTrueOrFalse) {
+        this.timerID = setInterval(function () {
+          return _this2.tick();
+        }, 1000);
+      }
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      clearInterval(this.timerID);
+      console.log(this.state.timerRunning);
+      var timerRunningTrueOrFalse = this.state.timerRunning;
+
+      if (timerRunningTrueOrFalse) {
+        clearInterval(this.timerID);
+      }
     }
   }, {
     key: "tick",

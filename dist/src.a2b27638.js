@@ -31758,14 +31758,15 @@ var Header = function Header() {
 
 var _default = Header;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"src/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"components/Timer.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 var _react = _interopRequireDefault(require("react"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
-var _Header = _interopRequireDefault(require("../components/Header"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31787,35 +31788,118 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var HelloMessage =
+var Timer =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(HelloMessage, _React$Component);
+  _inherits(Timer, _React$Component);
 
-  function HelloMessage() {
-    _classCallCheck(this, HelloMessage);
+  function Timer() {
+    _classCallCheck(this, Timer);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(HelloMessage).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(Timer).apply(this, arguments));
   }
 
-  _createClass(HelloMessage, [{
+  _createClass(Timer, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("div", {
+      var timeLeft = this.props.timeLeft;
+      console.log(timeLeft);
+      console.log(_typeof(timeLeft));
+      var minutesLeft = timeLeft.getMinutes();
+      var i = 0;
+
+      for (i = 0; i < minutesLeft; i++) {
+        console.log(i);
+      }
+
+      return _react.default.createElement(_react.default.framgent, null, _react.default.createElement("h2", null, minutesLeft));
+    }
+  }]);
+
+  return Timer;
+}(_react.default.Component);
+
+var _default = Timer;
+exports.default = _default;
+},{"react":"node_modules/react/index.js"}],"src/index.js":[function(require,module,exports) {
+"use strict";
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
+var _Header = _interopRequireDefault(require("../components/Header"));
+
+var _Timer = _interopRequireDefault(require("../components/Timer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var date = new Date();
+console.log(date);
+date.setMinutes(20);
+console.log(date); // ik denk niet dat dit zal werken, want getMinutes geeft integer terug. Ik denk eerder dat ik zal moeten rekenen
+
+/*
+console.log(date);
+const twentyMinutes = date.getMinutes();
+console.log(twentyMinutes);
+ */
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App(props) {
+    var _this;
+
+    _classCallCheck(this, App);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
+    _this.state = {
+      timeLeft: date,
+      running: false,
+      timerEnded: false
+    };
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, _react.default.createElement(_Timer.default, {
+        timeLeft: this.state.timeLeft
+      })), _react.default.createElement("div", {
         className: "container"
       }, _react.default.createElement("h1", null, "Hello ", this.props.name)));
     }
   }]);
 
-  return HelloMessage;
+  return App;
 }(_react.default.Component);
 
-var App = document.getElementById("app");
+var App_html = document.getElementById("app");
 
-_reactDom.default.render(_react.default.createElement(HelloMessage, {
-  name: "Yomi"
-}), App);
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","../components/Header":"components/Header.js"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+_reactDom.default.render(_react.default.createElement(App, null), App_html);
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","../components/Header":"components/Header.js","../components/Timer":"components/Timer.js"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -31843,7 +31927,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42781" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42583" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

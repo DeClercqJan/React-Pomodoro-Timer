@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Header from "../components/Header";
 import Timer from "../components/Timer";
+import CountdownTimer from "../components/CountdownTimer";
 
-
- const date = new Date();
+const date = new Date();
 console.log(date);
 date.setMinutes(20);
 console.log(date);
@@ -14,22 +14,25 @@ console.log(date);
 const twentyMinutes = date.getMinutes();
 console.log(twentyMinutes);
  */
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      timeLeft : date,
-      running: false, 
-    timerEnded: false
-  };
-
+    this.state = {
+      timeLeft: date,
+      running: false,
+      timerEnded: false
+    };
   }
   render() {
     return (
       <div>
-        <Header/>
+        <Header />
         <main>
-          <Timer timeLeft={this.state.timeLeft}/>
+        <div>
+            <CountdownTimer/>
+          </div>
+          <Timer timeLeft={this.state.timeLeft} />
         </main>
         <div className="container">
           <h1>Hello {this.props.name}</h1>
@@ -41,4 +44,4 @@ class App extends React.Component {
 
 let App_html = document.getElementById("app");
 
-ReactDOM.render(<App/>, App_html);
+ReactDOM.render(<App />, App_html);

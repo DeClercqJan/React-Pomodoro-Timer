@@ -7,7 +7,7 @@ class Timer extends React.Component {
         console.log(typeof timeLeft);
         const minutesLeft = timeLeft.getMinutes();
         let i = 0;
-        for (i = 0; i < minutesLeft; i++) {
+        for (i = minutesLeft; i > 0 ; i--) {
             console.log(i);
                 }
 

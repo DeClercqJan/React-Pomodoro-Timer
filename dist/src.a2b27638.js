@@ -31808,7 +31808,7 @@ function (_React$Component) {
       var minutesLeft = timeLeft.getMinutes();
       var i = 0;
 
-      for (i = 0; i < minutesLeft; i++) {
+      for (i = minutesLeft; i > 0; i--) {
         console.log(i);
       }
 

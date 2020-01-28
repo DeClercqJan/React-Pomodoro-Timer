@@ -31889,7 +31889,7 @@ var calculateTimeLeft = function calculateTimeLeft(date1, date2) {
   return timeLeft;
 };
 
-console.log(calculateTimeLeft(date1, date2));
+console.log(calculateTimeLeft(date1, date2)); // let timeLeft = calculateTimeLeft(date1, date2);
 
 var App =
 /*#__PURE__*/
@@ -31903,16 +31903,90 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
-      // timeLeft: date,
-      running: false,
+      renderCounter: 0,
+      timeOriginal: {},
+      timePlusAmount: {},
+      timeNow: {},
+      timeLeft: null,
+      timerRunning: true,
       timerEnded: false
     };
     return _this;
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      // question: why timer? To not overload browser?
+      this.timerID = setInterval(function () {
+        return _this2.tick();
+      }, 1000);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearInterval(this.timerID);
+    }
+  }, {
+    key: "tick",
+    value: function tick() {
+      var time = new Date(); // console.log(calculateTimeLeft(date1, date2));
+
+      if (this.state.renderCounter === 0) {
+        var timePlusAmount = new Date();
+        timePlusAmount.setMinutes(time.getMinutes() + 1);
+        this.setState({
+          timeOriginal: time,
+          timeNow: time,
+          timePlusAmount: timePlusAmount,
+          renderCounter: this.state.renderCounter + 1
+        });
+      } else {
+        this.setState({
+          timeNow: time,
+          renderCounter: this.state.renderCounter + 1,
+          timeLeft: this.state.timePlusAmount - time
+        });
+      } // CHECKS WHETHER TIMER HAS REACHED
+      // zhe internet says: The ==, !=, ===, and !== operators require you to use date.getTime() as in
+
+      /*     let timeNow = this.state.timeNow.getTime();
+      console.log(timeNow);
+      const timePlusAmount = this.state.timePlusAmount.getTime();
+      console.log(timePlusAmount);
+      if (timeNow === timePlusAmount) {
+        console.log("if werkt");
+      } */
+
+
+      var timeLeft = this.state.timeLeft;
+      console.log(timeLeft);
+
+      if (timeLeft <= 0 && timeleft == !null) {
+        console.log("great succes!");
+        this.setState({
+          renderCounter: 0,
+          timeOriginal: {},
+          timePlusAmount: {},
+          timeNow: {},
+          timeLeft: 0,
+          timerRunning: false,
+          timerEnded: false
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      /* 
+      const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+       useEffect(() => {
+        setTimeout(() => {
+          setTimeLeft(calculateTimeLeft());
+        }, 1000);
+      }); */
       return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, _react.default.createElement("div", null)), _react.default.createElement("div", {
         className: "container"
       }, _react.default.createElement("h1", null, "Hello ", this.props.name)));
@@ -31953,7 +32027,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42583" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37731" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

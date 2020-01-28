@@ -7,7 +7,7 @@ import Timer from "../components/Timer";
 const date1 = new Date();
 console.log(date1);
 const date2 = new Date();
-date2.setMinutes(date1.getMinutes()+20);
+date2.setMinutes(date1.getMinutes() + 20);
 console.log(date2);
 // ik denk niet dat dit zal werken, want getMinutes geeft integer terug. Ik denk eerder dat ik zal moeten rekenen
 /*
@@ -35,17 +35,85 @@ const calculateTimeLeft = (date1, date2) => {
   return timeLeft;
 };
 console.log(calculateTimeLeft(date1, date2));
+// let timeLeft = calculateTimeLeft(date1, date2);
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // timeLeft: date,
-      running: false,
+      renderCounter: 0,
+      timeOriginal: {},
+      timePlusAmount: {},
+      timeNow: {},
+      timeLeft: null,
+      timerRunning: true,
       timerEnded: false
     };
   }
+
+  componentDidMount() {
+      // question: why timer? To not overload browser?
+      this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+      clearInterval(this.timerID);
+  }
+
+  tick() {
+    let time = new Date();
+    // console.log(calculateTimeLeft(date1, date2));
+    if (this.state.renderCounter === 0) {
+      let timePlusAmount = new Date();
+      timePlusAmount.setMinutes(time.getMinutes() + 1);
+      this.setState({
+        timeOriginal: time,
+        timeNow: time,
+        timePlusAmount: timePlusAmount,
+        renderCounter: this.state.renderCounter + 1
+      });
+    } else {
+      this.setState({
+        timeNow: time,
+        renderCounter: this.state.renderCounter + 1,
+        timeLeft: this.state.timePlusAmount - time
+      });
+    }
+    // CHECKS WHETHER TIMER HAS REACHED
+    // zhe internet says: The ==, !=, ===, and !== operators require you to use date.getTime() as in
+    /*     let timeNow = this.state.timeNow.getTime();
+    console.log(timeNow);
+    const timePlusAmount = this.state.timePlusAmount.getTime();
+    console.log(timePlusAmount);
+    if (timeNow === timePlusAmount) {
+      console.log("if werkt");
+    } */
+    let timeLeft = this.state.timeLeft;
+    console.log(timeLeft);
+    if (timeLeft <= 0 && timeleft == !null) {
+      console.log("great succes!");
+      this.setState({
+        renderCounter: 0,
+        timeOriginal: {},
+        timePlusAmount: {},
+        timeNow: {},
+        timeLeft: 0,
+        timerRunning: false,
+        timerEnded: false
+      });
+    }
+  }
+
   render() {
+    /* 
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+    useEffect(() => {
+      setTimeout(() => {
+        setTimeLeft(calculateTimeLeft());
+      }, 1000);
+    }); */
+
     return (
       <div>
         <Header />

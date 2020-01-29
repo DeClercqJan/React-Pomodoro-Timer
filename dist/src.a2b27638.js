@@ -31802,17 +31802,23 @@ function (_React$Component) {
   _createClass(Timer, [{
     key: "render",
     value: function render() {
-      var timeLeft = this.props.timeLeft;
-      console.log(timeLeft);
-      console.log(_typeof(timeLeft));
-      var minutesLeft = timeLeft.getMinutes();
-      var i = 0;
+      var stateAll = this.props.stateAll;
+      var timeLeftNumber = stateAll.timeLeft;
+      var timeLeftDate = new Date(timeLeftNumber);
+      var timeLeftMinutes = timeLeftDate.getMinutes();
+      var timeLeftSeconds = timeLeftDate.getSeconds();
+      /*         const timeLeft = this.props.timeLeft;
+              console.log("hallo");
+              console.log(timeLeft);
+              console.log(typeof timeLeft);
+              const minutesLeft = timeLeft.getMinutes();
+              let i = 0;
+              for (i = minutesLeft; i > 0 ; i--) {
+                  console.log(i);
+                      }
+       */
 
-      for (i = minutesLeft; i > 0; i--) {
-        console.log(i);
-      }
-
-      return _react.default.createElement(_react.default.framgent, null, _react.default.createElement("h2", null, minutesLeft));
+      return _react.default.createElement("p", null, "Time left = ", timeLeftMinutes, " minutes and ", timeLeftSeconds, " seconds ");
     }
   }]);
 
@@ -31848,9 +31854,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -31907,24 +31913,39 @@ function (_React$Component) {
       timePlusAmount: {},
       timeNow: {},
       timeLeft: null,
-      timerRunning: true,
+      timerRunning: false,
       timerEnded: false
     };
+    _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_this));
     return _this;
-  } // https://reactjs.org/docs/state-and-lifecycle.html
-
+  }
 
   _createClass(App, [{
+    key: "startTimer",
+    value: function startTimer() {
+      console.log("test");
+      this.setState({
+        timerRunning: true
+      });
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      var timePlusAmount = new Date(); // change this to amount to set Timer
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
       var _this2 = this;
 
+      // https://reactjs.org/docs/state-and-lifecycle.html
+      // componentDidMount() {
       // question: why timer? To not overload browser?
       // this on/off functionality needs to be added to button. Here I just put it on on (true) for now. Also see unmountfunction
       console.log(this.state.timerRunning);
-      var timerRunningTrueOrFalse = this.state.timerRunning;
+      var timerRunning = this.state.timerRunning;
 
-      if (timerRunningTrueOrFalse) {
+      if (timerRunning) {
         this.timerID = setInterval(function () {
           return _this2.tick();
         }, 1000);
@@ -31934,9 +31955,9 @@ function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       console.log(this.state.timerRunning);
-      var timerRunningTrueOrFalse = this.state.timerRunning;
+      var timerRunning = this.state.timerRunning;
 
-      if (timerRunningTrueOrFalse) {
+      if (timerRunning) {
         clearInterval(this.timerID);
       }
     }
@@ -31946,8 +31967,9 @@ function (_React$Component) {
       var time = new Date(); // console.log(calculateTimeLeft(date1, date2));
 
       if (this.state.renderCounter === 0) {
-        var timePlusAmount = new Date();
-        timePlusAmount.setMinutes(time.getMinutes() + 1);
+        var timePlusAmount = new Date(); // change this to amount to set Timer
+
+        timePlusAmount.setMinutes(time.getMinutes() + 20);
         this.setState({
           timeOriginal: time,
           timeNow: time,
@@ -31982,7 +32004,7 @@ function (_React$Component) {
           timeOriginal: {},
           timePlusAmount: {},
           timeNow: {},
-          timeLeft: 0,
+          timeLeft: null,
           timerRunning: false,
           timerEnded: false
         });
@@ -31998,9 +32020,11 @@ function (_React$Component) {
           setTimeLeft(calculateTimeLeft());
         }, 1000);
       }); */
-      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, _react.default.createElement("div", null)), _react.default.createElement("div", {
-        className: "container"
-      }, _react.default.createElement("h1", null, "Hello ", this.props.name)));
+      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, _react.default.createElement(_Timer.default, {
+        stateAll: this.state
+      })), _react.default.createElement("button", {
+        onClick: this.startTimer
+      }, "Start timer"));
     }
   }]);
 
@@ -32038,7 +32062,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37731" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40275" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

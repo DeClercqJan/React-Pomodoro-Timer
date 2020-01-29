@@ -46,27 +46,40 @@ class App extends React.Component {
       timePlusAmount: {},
       timeNow: {},
       timeLeft: null,
-      timerRunning: true,
+      timerRunning: false,
       timerEnded: false
     };
+    this.startTimer = this.startTimer.bind(this);
   }
 
+  startTimer() {
+    console.log("test");
+  
+    this.setState({ timerRunning: true });
+  }
+
+ componentDidMount() {
+  let timePlusAmount = new Date();
+  // change this to amount to set Timer
+}
+
+  componentDidUpdate() {
   // https://reactjs.org/docs/state-and-lifecycle.html
-  componentDidMount() {
+// componentDidMount() {
     // question: why timer? To not overload browser?
 
     // this on/off functionality needs to be added to button. Here I just put it on on (true) for now. Also see unmountfunction
     console.log(this.state.timerRunning);
-    let timerRunningTrueOrFalse = this.state.timerRunning;
-    if (timerRunningTrueOrFalse) {
+    let timerRunning = this.state.timerRunning;
+    if (timerRunning) {
       this.timerID = setInterval(() => this.tick(), 1000);
     }
   }
 
   componentWillUnmount() {
     console.log(this.state.timerRunning);
-    let timerRunningTrueOrFalse = this.state.timerRunning;
-    if (timerRunningTrueOrFalse) {
+    let timerRunning = this.state.timerRunning;
+    if (timerRunning) {
       clearInterval(this.timerID);
     }
   }
@@ -76,7 +89,8 @@ class App extends React.Component {
     // console.log(calculateTimeLeft(date1, date2));
     if (this.state.renderCounter === 0) {
       let timePlusAmount = new Date();
-      timePlusAmount.setMinutes(time.getMinutes() + 1);
+      // change this to amount to set Timer
+      timePlusAmount.setMinutes(time.getMinutes() + 20);
       this.setState({
         timeOriginal: time,
         timeNow: time,
@@ -108,7 +122,7 @@ class App extends React.Component {
         timeOriginal: {},
         timePlusAmount: {},
         timeNow: {},
-        timeLeft: 0,
+        timeLeft: null,
         timerRunning: false,
         timerEnded: false
       });
@@ -129,12 +143,9 @@ class App extends React.Component {
       <div>
         <Header />
         <main>
-          <div>{/* <CountdownTimer/> */}</div>
-          {/* <Timer timeLeft={this.state.timeLeft} /> */}
+          <Timer stateAll={this.state} />
         </main>
-        <div className="container">
-          <h1>Hello {this.props.name}</h1>
-        </div>
+        <button onClick={this.startTimer}>Start timer</button>
       </div>
     );
   }

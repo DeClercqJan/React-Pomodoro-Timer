@@ -50,60 +50,70 @@ class App extends React.Component {
       timerEnded: false
     };
     this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+
+  }
+
+  componentDidMount() {
+      let time = new Date();
+      console.log("test");
+      let timePlusAmount = new Date();
+      // change this to amount to set Timer
+      timePlusAmount.setMinutes(time.getMinutes() + 20);
+      this.setState({
+        renderCounter: this.state.renderCounter + 1,
+        timeOriginal: time,
+        timeNow: time,
+        timePlusAmount: timePlusAmount,
+        timeLeft: timePlusAmount - time
+      });
   }
 
   startTimer() {
-    console.log("test");
-  
     this.setState({ timerRunning: true });
   }
 
- componentDidMount() {
-  let timePlusAmount = new Date();
-  // change this to amount to set Timer
-}
+  stopTimer() {
+    this.setState({ timerRunning: false });
+  }
 
-  componentDidUpdate() {
-  // https://reactjs.org/docs/state-and-lifecycle.html
-// componentDidMount() {
+ /*  componentDidUpdate() {
+    // https://reactjs.org/docs/state-and-lifecycle.html
+    // componentDidMount() {
     // question: why timer? To not overload browser?
 
     // this on/off functionality needs to be added to button. Here I just put it on on (true) for now. Also see unmountfunction
     console.log(this.state.timerRunning);
     let timerRunning = this.state.timerRunning;
+    console.log(this.timerID);
     if (timerRunning) {
-      this.timerID = setInterval(() => this.tick(), 1000);
+      console.log("component did update evaluated yes")
+      this.timerID = setInterval(
+        () => this.tick(),
+        1000
+      );
     }
-  }
+    else {
+      clearInterval(this.timerID);
+    }
+  } */
 
   componentWillUnmount() {
-    console.log(this.state.timerRunning);
+/*     console.log(this.state.timerRunning);
     let timerRunning = this.state.timerRunning;
     if (timerRunning) {
       clearInterval(this.timerID);
-    }
+    } */
   }
 
   tick() {
     let time = new Date();
     // console.log(calculateTimeLeft(date1, date2));
-    if (this.state.renderCounter === 0) {
-      let timePlusAmount = new Date();
-      // change this to amount to set Timer
-      timePlusAmount.setMinutes(time.getMinutes() + 20);
-      this.setState({
-        timeOriginal: time,
-        timeNow: time,
-        timePlusAmount: timePlusAmount,
-        renderCounter: this.state.renderCounter + 1
-      });
-    } else {
-      this.setState({
-        timeNow: time,
-        renderCounter: this.state.renderCounter + 1,
-        timeLeft: this.state.timePlusAmount - time
-      });
-    }
+    this.setState({
+      timeNow: time,
+      renderCounter: this.state.renderCounter + 1,
+      timeLeft: this.state.timePlusAmount - time
+    });
     // CHECKS WHETHER TIMER HAS REACHED
     // zhe internet says: The ==, !=, ===, and !== operators require you to use date.getTime() as in
     /*     let timeNow = this.state.timeNow.getTime();
@@ -146,6 +156,7 @@ class App extends React.Component {
           <Timer stateAll={this.state} />
         </main>
         <button onClick={this.startTimer}>Start timer</button>
+        <button onClick={this.stopTimer}>Stop timer</button>
       </div>
     );
   }

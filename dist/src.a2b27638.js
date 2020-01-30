@@ -31896,6 +31896,11 @@ const calculateTimeLeft = (date1, date2) => {
 };
 console.log(calculateTimeLeft(date1, date2)); */
 // let timeLeft = calculateTimeLeft(date1, date2);
+var time = new Date();
+var timePlusAmount = new Date(); // change this to amount to set Timer
+
+timePlusAmount.setMinutes(time.getMinutes() + 1);
+
 var App =
 /*#__PURE__*/
 function (_React$Component) {
@@ -31908,87 +31913,79 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
-      renderCounter: 0,
-      timeOriginal: {},
-      timePlusAmount: {},
-      timeNow: {},
-      timeLeft: null,
+      // renderCounter: 0,
+      timeOriginal: time,
+      timePlusAmount: timePlusAmount,
+      timeNow: time,
+      timeLeft: timePlusAmount - time,
       timerRunning: false,
       timerEnded: false
     };
     _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_this));
     _this.stopTimer = _this.stopTimer.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // will fire on 1st build
+
 
   _createClass(App, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      var time = new Date();
-      console.log("test");
-      var timePlusAmount = new Date(); // change this to amount to set Timer
-
-      timePlusAmount.setMinutes(time.getMinutes() + 20);
-      this.setState({
-        renderCounter: this.state.renderCounter + 1,
-        timeOriginal: time,
-        timeNow: time,
-        timePlusAmount: timePlusAmount,
-        timeLeft: timePlusAmount - time
-      });
-    }
+    value: function componentDidMount() {}
   }, {
     key: "startTimer",
     value: function startTimer() {
-      this.setState({
-        timerRunning: true
-      });
+      var _this2 = this;
+
+      this.timerID = setInterval(function () {
+        return _this2.tick();
+      }, 1000);
     }
   }, {
     key: "stopTimer",
     value: function stopTimer() {
-      this.setState({
-        timerRunning: false
-      });
-    }
-    /*  componentDidUpdate() {
-       // https://reactjs.org/docs/state-and-lifecycle.html
-       // componentDidMount() {
-       // question: why timer? To not overload browser?
-        // this on/off functionality needs to be added to button. Here I just put it on on (true) for now. Also see unmountfunction
-       console.log(this.state.timerRunning);
-       let timerRunning = this.state.timerRunning;
-       console.log(this.timerID);
-       if (timerRunning) {
-         console.log("component did update evaluated yes")
-         this.timerID = setInterval(
-           () => this.tick(),
-           1000
-         );
-       }
-       else {
-         clearInterval(this.timerID);
-       }
-     } */
+      clearInterval(this.timerID);
+    } // will fire on 2nd build and after
+    // PROBLEM: fires too many times and takes too much memory space. Crashes thing sometimes
 
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {// https://reactjs.org/docs/state-and-lifecycle.html
+      // componentDidMount() {
+
+      /*        if (this.state.timeLeft > 0) {
+          ReactDOM.unmountComponentAtNode(document.querySelector("#app"));
+        }  */
+      // question: why timer? To not overload browser?
+      // this on/off functionality needs to be added to button. Here I just put it on on (true) for now. Also see unmountfunction
+      // let renderCounter = this.state.renderCounter;
+
+      /*     if (this.state !== prevState) {
+            console.log(this.state.timerRunning);
+            let timerRunning = this.state.timerRunning;
+            console.log(this.state.timerEnded);
+            let timerEnded = this.state.timerEnded;
+            if (timerEnded) {
+              ReactDOM.unmountComponentAtNode(document.querySelector("#app"));
+            }
+            if (timerRunning) {
+              this.timerID = setInterval(() => this.tick(), 1000);
+            }
+          } */
+    }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      /*     console.log(this.state.timerRunning);
-          let timerRunning = this.state.timerRunning;
-          if (timerRunning) {
-            clearInterval(this.timerID);
-          } */
+      console.log("Component is about to be unmounted!");
+      clearInterval(this.timerID);
     }
   }, {
     key: "tick",
     value: function tick() {
-      var time = new Date(); // console.log(calculateTimeLeft(date1, date2));
+      var timeNew = new Date(); // console.log(calculateTimeLeft(date1, date2));
 
       this.setState({
-        timeNow: time,
-        renderCounter: this.state.renderCounter + 1,
-        timeLeft: this.state.timePlusAmount - time
+        timeNow: timeNew,
+        // renderCounter: this.state.renderCounter + 1,
+        timeLeft: this.state.timePlusAmount - timeNew
       }); // CHECKS WHETHER TIMER HAS REACHED
       // zhe internet says: The ==, !=, ===, and !== operators require you to use date.getTime() as in
 
@@ -32000,9 +31997,8 @@ function (_React$Component) {
         console.log("if werkt");
       } */
 
-      var timeLeft = this.state.timeLeft;
+      /*     let timeLeft = this.state.timeLeft;
       console.log(timeLeft);
-
       if (timeLeft <= 0 && timeleft == !null) {
         console.log("great succes!");
         this.setState({
@@ -32013,6 +32009,13 @@ function (_React$Component) {
           timeLeft: null,
           timerRunning: false,
           timerEnded: false
+        });
+      } */
+
+      if (this.state.timeLeft <= 0) {
+        console.log("great succes!");
+        this.setState({
+          timerEnded: true
         });
       }
     }
@@ -32070,7 +32073,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40275" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33045" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

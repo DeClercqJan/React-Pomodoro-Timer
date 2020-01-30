@@ -31807,18 +31807,7 @@ function (_React$Component) {
       var timeLeftDate = new Date(timeLeftNumber);
       var timeLeftMinutes = timeLeftDate.getMinutes();
       var timeLeftSeconds = timeLeftDate.getSeconds();
-      /*         const timeLeft = this.props.timeLeft;
-              console.log("hallo");
-              console.log(timeLeft);
-              console.log(typeof timeLeft);
-              const minutesLeft = timeLeft.getMinutes();
-              let i = 0;
-              for (i = minutesLeft; i > 0 ; i--) {
-                  console.log(i);
-                      }
-       */
-
-      return _react.default.createElement("p", null, "Time left = ", timeLeftMinutes, " minutes and ", timeLeftSeconds, " seconds ");
+      return _react.default.createElement("p", null, "Time left = ", timeLeftMinutes, " minutes and ", timeLeftSeconds, " seconds", " ");
     }
   }]);
 
@@ -31862,40 +31851,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-// import CountdownTimer from "../components/CountdownTimer";
-// DON'T NEED THIS ANYMORE AS I DID IT DIFFERENTLY
-
-/* const date1 = new Date();
-console.log(date1);
-const date2 = new Date();
-date2.setMinutes(date1.getMinutes() + 20);
-console.log(date2);
-// ik denk niet dat dit zal werken, want getMinutes geeft integer terug. Ik denk eerder dat ik zal moeten rekenen
-
-// console.log(date);
-// const twentyMinutes = date.getMinutes();
-// console.log(twentyMinutes);
-
-const calculateTimeLeft = (date1, date2) => {
-  console.log(date1);
-  console.log(date2);
-  // const difference = +new Date("2020-01-01") - +new Date();
-  const difference = date2 - date1;
-  let timeLeft = {};
-  console.log(difference);
-  if (difference > 0) {
-    timeLeft = {
-      // days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      // hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60)
-    };
-  }
-
-  return timeLeft;
-};
-console.log(calculateTimeLeft(date1, date2)); */
-// let timeLeft = calculateTimeLeft(date1, date2);
 var time = new Date();
 var timePlusAmount = new Date(); // change this to amount to set Timer
 
@@ -31917,9 +31872,9 @@ function (_React$Component) {
       timeOriginal: time,
       timePlusAmount: timePlusAmount,
       timeNow: time,
-      timeLeft: timePlusAmount - time,
-      timerRunning: false,
-      timerEnded: false
+      timeLeft: timePlusAmount - time // timerRunning: false,
+      // timerEnded: false
+
     };
     _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_this));
     _this.stopTimer = _this.stopTimer.bind(_assertThisInitialized(_this));
@@ -31935,6 +31890,7 @@ function (_React$Component) {
     value: function startTimer() {
       var _this2 = this;
 
+      // question: why timer? To not overload browser?
       this.timerID = setInterval(function () {
         return _this2.tick();
       }, 1000);
@@ -31944,91 +31900,37 @@ function (_React$Component) {
     value: function stopTimer() {
       clearInterval(this.timerID);
     } // will fire on 2nd build and after
-    // PROBLEM: fires too many times and takes too much memory space. Crashes thing sometimes
+    // PROBLEM: fires too many times and takes too much memory space if I add . Crashes thing sometimes
+    // https://reactjs.org/docs/state-and-lifecycle.html: 
+    // You may call setState() immediately in componentDidUpdate() but note that it must be wrapped in a condition like in the example above, or you’ll cause an infinite loop. It would also cause an extra re-rendering which, while not visible to the user, can affect the component performance.
 
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate() {// https://reactjs.org/docs/state-and-lifecycle.html
-      // componentDidMount() {
+    value: function componentDidUpdate() {} // needs to called as I understand it
 
-      /*        if (this.state.timeLeft > 0) {
-          ReactDOM.unmountComponentAtNode(document.querySelector("#app"));
-        }  */
-      // question: why timer? To not overload browser?
-      // this on/off functionality needs to be added to button. Here I just put it on on (true) for now. Also see unmountfunction
-      // let renderCounter = this.state.renderCounter;
-
-      /*     if (this.state !== prevState) {
-            console.log(this.state.timerRunning);
-            let timerRunning = this.state.timerRunning;
-            console.log(this.state.timerEnded);
-            let timerEnded = this.state.timerEnded;
-            if (timerEnded) {
-              ReactDOM.unmountComponentAtNode(document.querySelector("#app"));
-            }
-            if (timerRunning) {
-              this.timerID = setInterval(() => this.tick(), 1000);
-            }
-          } */
-    }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      console.log("Component is about to be unmounted!");
-      clearInterval(this.timerID);
-    }
+    value: function componentWillUnmount() {}
   }, {
     key: "tick",
     value: function tick() {
-      var timeNew = new Date(); // console.log(calculateTimeLeft(date1, date2));
-
+      var timeNew = new Date();
       this.setState({
         timeNow: timeNew,
-        // renderCounter: this.state.renderCounter + 1,
         timeLeft: this.state.timePlusAmount - timeNew
       }); // CHECKS WHETHER TIMER HAS REACHED
-      // zhe internet says: The ==, !=, ===, and !== operators require you to use date.getTime() as in
-
-      /*     let timeNow = this.state.timeNow.getTime();
-      console.log(timeNow);
-      const timePlusAmount = this.state.timePlusAmount.getTime();
-      console.log(timePlusAmount);
-      if (timeNow === timePlusAmount) {
-        console.log("if werkt");
-      } */
-
-      /*     let timeLeft = this.state.timeLeft;
-      console.log(timeLeft);
-      if (timeLeft <= 0 && timeleft == !null) {
-        console.log("great succes!");
-        this.setState({
-          renderCounter: 0,
-          timeOriginal: {},
-          timePlusAmount: {},
-          timeNow: {},
-          timeLeft: null,
-          timerRunning: false,
-          timerEnded: false
-        });
-      } */
 
       if (this.state.timeLeft <= 0) {
         console.log("great succes!");
+        clearInterval(this.timerID);
         this.setState({
-          timerEnded: true
+          timeLeft: 0
         });
       }
     }
   }, {
     key: "render",
     value: function render() {
-      /* 
-      const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-       useEffect(() => {
-        setTimeout(() => {
-          setTimeLeft(calculateTimeLeft());
-        }, 1000);
-      }); */
       return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, _react.default.createElement(_Timer.default, {
         stateAll: this.state
       })), _react.default.createElement("button", {

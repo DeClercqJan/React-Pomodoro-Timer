@@ -31877,6 +31877,7 @@ function (_React$Component) {
 
     };
     _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_this));
+    _this.resetTimer = _this.resetTimer.bind(_assertThisInitialized(_this));
     _this.stopTimer = _this.stopTimer.bind(_assertThisInitialized(_this));
     return _this;
   } // will fire on 1st build
@@ -31894,6 +31895,17 @@ function (_React$Component) {
       this.timerID = setInterval(function () {
         return _this2.tick();
       }, 1000);
+    }
+  }, {
+    key: "resetTimer",
+    value: function resetTimer() {
+      clearInterval(this.timerID);
+      this.setState({
+        timeOriginal: time,
+        timePlusAmount: timePlusAmount,
+        timeNow: time,
+        timeLeft: timePlusAmount - time
+      });
     }
   }, {
     key: "stopTimer",
@@ -31936,6 +31948,8 @@ function (_React$Component) {
       })), _react.default.createElement("button", {
         onClick: this.startTimer
       }, "Start timer"), _react.default.createElement("button", {
+        onClick: this.resetTimer
+      }, "Reset timer"), _react.default.createElement("button", {
         onClick: this.stopTimer
       }, "Stop timer"));
     }

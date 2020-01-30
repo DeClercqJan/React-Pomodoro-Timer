@@ -21,6 +21,7 @@ class App extends React.Component {
       // timerEnded: false
     };
     this.startTimer = this.startTimer.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
   }
 
@@ -33,6 +34,16 @@ class App extends React.Component {
         // question: why timer? To not overload browser?
     this.timerID = setInterval(() => this.tick(), 1000);
   }
+
+  resetTimer() {
+    clearInterval(this.timerID);
+    this.setState({
+      timeOriginal: time,
+      timePlusAmount: timePlusAmount,
+      timeNow: time,
+      timeLeft: timePlusAmount - time
+    })
+}
 
   stopTimer() {
     clearInterval(this.timerID);
@@ -75,6 +86,7 @@ class App extends React.Component {
           <Timer stateAll={this.state} />
         </main>
         <button onClick={this.startTimer}>Start timer</button>
+        <button onClick={this.resetTimer}>Reset timer</button>
         <button onClick={this.stopTimer}>Stop timer</button>
       </div>
     );

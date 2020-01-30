@@ -37,11 +37,13 @@ class App extends React.Component {
 
   resetTimer() {
     clearInterval(this.timerID);
+    let timeNew = new Date();
+    let timePlusAmount = new Date();
+    timePlusAmount.setMinutes(time.getMinutes() + 1);
     this.setState({
-      timeOriginal: time,
       timePlusAmount: timePlusAmount,
-      timeNow: time,
-      timeLeft: timePlusAmount - time
+      timeNow: timeNew,
+      timeLeft: timePlusAmount - timeNew
     })
 }
 

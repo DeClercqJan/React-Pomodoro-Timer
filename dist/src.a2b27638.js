@@ -31900,11 +31900,13 @@ function (_React$Component) {
     key: "resetTimer",
     value: function resetTimer() {
       clearInterval(this.timerID);
+      var timeNew = new Date();
+      var timePlusAmount = new Date();
+      timePlusAmount.setMinutes(time.getMinutes() + 1);
       this.setState({
-        timeOriginal: time,
         timePlusAmount: timePlusAmount,
-        timeNow: time,
-        timeLeft: timePlusAmount - time
+        timeNow: timeNew,
+        timeLeft: timePlusAmount - timeNew
       });
     }
   }, {

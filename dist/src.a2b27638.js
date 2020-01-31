@@ -31802,21 +31802,14 @@ function (_React$Component) {
   _createClass(Timer, [{
     key: "render",
     value: function render() {
-      var stateAll = this.props.stateAll; // console.log(stateAll);
-
+      var stateAll = this.props.stateAll;
       var timeLeftNumber = stateAll.timeLeftNumber;
-      var timeLeftDate = new Date(timeLeftNumber);
-      var timeZeroZeroHours = stateAll.timeZeroZeroHours;
-      console.log(timeZeroZeroHours);
-      var timeZeroZeroHoursNumber = timeZeroZeroHours.getTime();
-      console.log(timeZeroZeroHoursNumber);
-      var timeLeftDate2 = new Date(timeZeroZeroHoursNumber + timeLeftNumber);
-      console.log(timeLeftDate2); // Having trouble with going over 59 minutes. Not foreseen in original functionality
-      // let timeLeftHours = timeLeftDate.getHours();
-
-      var timeLeftHours = timeLeftDate2.getHours();
-      var timeLeftMinutes = timeLeftDate2.getMinutes();
-      var timeLeftSeconds = timeLeftDate2.getSeconds();
+      var timeZero = stateAll.timeZero;
+      var timeZeroNumber = timeZero.getTime();
+      var timeLeftDate = new Date(timeZeroNumber + timeLeftNumber);
+      var timeLeftHours = timeLeftDate.getHours();
+      var timeLeftMinutes = timeLeftDate.getMinutes();
+      var timeLeftSeconds = timeLeftDate.getSeconds();
       return _react.default.createElement("p", null, "Time left = ", timeLeftHours, ":", timeLeftMinutes, ":", timeLeftSeconds);
     }
   }]);
@@ -31861,20 +31854,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var time = new Date();
-var time2 = time;
-console.log(time);
-console.log(time2);
-new Date(time2.setHours(0));
-console.log(time2);
-var timePlusAmount = new Date();
-console.log(timePlusAmount); // change this to amount to set Timer
-
-timePlusAmount.setMinutes(time.getMinutes() + 1);
-console.log(timePlusAmount);
-var timePlusAmount2 = timePlusAmount;
-new Date(timePlusAmount2.setHours(0));
-console.log(timePlusAmount2);
+// original time (in 1970) starts at 1 o clock so had to reset this
 var time0 = new Date(0);
 console.log(time0);
 new Date(time0.setHours(0));
@@ -31890,18 +31870,16 @@ function (_React$Component) {
 
     _classCallCheck(this, App);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props)); // 1000 = 1 second. 60 seconds in a minute. And it's 20 times a minute
+
     _this.state = {
       // renderCounter: 0,
       // timeOriginal: time,
-      timeOriginalZeroHours: time2,
       // timePlusAmount: timePlusAmount,
-      timePlusAmountZeroHours: timePlusAmount2,
       // timeNow: time,
-      timeNowZeroHours: time2,
-      timeLeftNumber: timePlusAmount2 - time2,
-      timeZeroZeroHours: time0,
-      timerRunning: false // timerEnded: false
+      timeLeftNumber: 20 * 60 * 1000,
+      timeZero: time0 // timerRunning: false
+      // timerEnded: false
 
     };
     _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_this));
@@ -31929,15 +31907,10 @@ function (_React$Component) {
   }, {
     key: "resetTimer",
     value: function resetTimer() {
-      /*     clearInterval(this.timerID);
-          let timeNew = new Date();
-          let timePlusAmount = new Date();
-          timePlusAmount.setMinutes(time.getMinutes() + 1);
-          this.setState({
-            timePlusAmount: timePlusAmount,
-            timeNow: timeNew,
-            timeLeftNumber: timePlusAmount - timeNew,
-          }); */
+      clearInterval(this.timerID);
+      this.setState({
+        timeLeftNumber: 60 * 1000
+      });
     }
   }, {
     key: "stopTimer",
@@ -31958,13 +31931,9 @@ function (_React$Component) {
   }, {
     key: "tick",
     value: function tick() {
-      var timeNew = new Date();
-      var timeNew2 = timeNew;
-      new Date(timeNew2.setHours(0));
       this.setState({
-        timeNowZeroHours: timeNew2,
-        timeLeftNumber: this.state.timePlusAmountZeroHours - timeNew2
-      }); // CHECKS WHETHER TIMER HAS REACHED
+        timeLeftNumber: this.state.timeLeftNumber - 1000
+      }); // CHECKS WHETHER TIMER HAS REACHED END
 
       if (this.state.timeLeftNumber <= 0) {
         console.log("great succes!");
@@ -31977,22 +31946,15 @@ function (_React$Component) {
   }, {
     key: "addMinute",
     value: function addMinute() {
-      var timeLeftNumber = this.state.timeLeftNumber;
-      var minute = new Date();
-      console.log(minute);
-      var minute2 = minute.setMinutes(1);
-      console.log(minute2);
-      var minute3 = minute.getTime();
-      console.log(minute3);
       this.setState({
-        timeLeftNumber: timeLeftNumber + minute3
+        timeLeftNumber: this.state.timeLeftNumber + 60 * 1000
       });
     }
   }, {
     key: "subtractMinute",
     value: function subtractMinute() {
       this.setState({
-        timePlusAmount: timePlusAmount
+        timeLeftNumber: this.state.timeLeftNumber - 60 * 1000
       });
     }
   }, {

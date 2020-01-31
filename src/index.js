@@ -3,20 +3,7 @@ import ReactDOM from "react-dom";
 import Header from "../components/Header";
 import Timer from "../components/Timer";
 
-let time = new Date();
-let time2 = time;
-console.log(time);
-console.log(time2);
-new Date(time2.setHours(0));
-console.log(time2);
-let timePlusAmount = new Date();
-console.log(timePlusAmount);
-// change this to amount to set Timer
-timePlusAmount.setMinutes(time.getMinutes() + 1);
-console.log(timePlusAmount);
-let timePlusAmount2 = timePlusAmount;
-new Date(timePlusAmount2.setHours(0));
-console.log(timePlusAmount2);
+// original time (in 1970) starts at 1 o clock so had to reset this
 let time0 = new Date(0);
 console.log(time0);
 new Date(time0.setHours(0));
@@ -25,17 +12,15 @@ console.log(time0);
 class App extends React.Component {
   constructor(props) {
     super(props);
+    // 1000 = 1 second. 60 seconds in a minute. And it's 20 times a minute
     this.state = {
       // renderCounter: 0,
       // timeOriginal: time,
-      timeOriginalZeroHours: time2,
       // timePlusAmount: timePlusAmount,
-      timePlusAmountZeroHours: timePlusAmount2,
       // timeNow: time,
-      timeNowZeroHours: time2,
-      timeLeftNumber: timePlusAmount2 - time2,
-      timeZeroZeroHours: time0,
-      timerRunning: false
+      timeLeftNumber: 20 * 60 * 1000,
+      timeZero: time0,
+      // timerRunning: false
       // timerEnded: false
     };
     this.startTimer = this.startTimer.bind(this);
@@ -54,15 +39,10 @@ class App extends React.Component {
   }
 
   resetTimer() {
-/*     clearInterval(this.timerID);
-    let timeNew = new Date();
-    let timePlusAmount = new Date();
-    timePlusAmount.setMinutes(time.getMinutes() + 1);
+    clearInterval(this.timerID);
     this.setState({
-      timePlusAmount: timePlusAmount,
-      timeNow: timeNew,
-      timeLeftNumber: timePlusAmount - timeNew,
-    }); */
+      timeLeftNumber: 60 * 1000,
+    });
   }
 
   stopTimer() {
@@ -79,40 +59,28 @@ class App extends React.Component {
   componentWillUnmount() {}
 
   tick() {
-    let timeNew = new Date();
-    let timeNew2 = timeNew;
-    new Date(timeNew2.setHours(0));
-
     this.setState({
-      timeNowZeroHours: timeNew2,
-      timeLeftNumber: this.state.timePlusAmountZeroHours - timeNew2,
+      timeLeftNumber: this.state.timeLeftNumber - 1000
     });
-    // CHECKS WHETHER TIMER HAS REACHED
+    // CHECKS WHETHER TIMER HAS REACHED END
     if (this.state.timeLeftNumber <= 0) {
       console.log("great succes!");
       clearInterval(this.timerID);
       this.setState({
-        timeLeftNumber: 0,
+        timeLeftNumber: 0
       });
     }
   }
 
   addMinute() {
-    let timeLeftNumber = this.state.timeLeftNumber;
-    let minute = new Date();
-    console.log(minute);
-    let minute2 = minute.setMinutes(1);
-    console.log(minute2);
-    let minute3 = minute.getTime();
-    console.log(minute3);
     this.setState({
-      timeLeftNumber: timeLeftNumber + minute3,
+      timeLeftNumber: this.state.timeLeftNumber + (60 * 1000)
     });
   }
 
   subtractMinute() {
     this.setState({
-      timePlusAmount: timePlusAmount
+      timeLeftNumber: this.state.timeLeftNumber - (60 * 1000)
     });
   }
 

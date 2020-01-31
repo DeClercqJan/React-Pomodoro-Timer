@@ -3,13 +3,25 @@ import React from "react";
 class Timer extends React.Component {
   render() {
     let stateAll = this.props.stateAll;
-    let timeLeftNumber = stateAll.timeLeft;
+    // console.log(stateAll);
+    let timeLeftNumber = stateAll.timeLeftNumber;
     let timeLeftDate = new Date(timeLeftNumber);
-    let timeLeftMinutes = timeLeftDate.getMinutes();
-    let timeLeftSeconds = timeLeftDate.getSeconds();
+
+    let timeZeroZeroHours = stateAll.timeZeroZeroHours;
+    console.log(timeZeroZeroHours);
+    let timeZeroZeroHoursNumber = timeZeroZeroHours.getTime();
+    console.log(timeZeroZeroHoursNumber);
+    let timeLeftDate2 = new Date(timeZeroZeroHoursNumber + timeLeftNumber);
+    console.log(timeLeftDate2);
+
+    // Having trouble with going over 59 minutes. Not foreseen in original functionality
+    // let timeLeftHours = timeLeftDate.getHours();
+    let timeLeftHours = timeLeftDate2.getHours();
+    let timeLeftMinutes = timeLeftDate2.getMinutes();
+    let timeLeftSeconds = timeLeftDate2.getSeconds();
     return (
       <p>
-        Time left = {timeLeftMinutes} minutes and {timeLeftSeconds} seconds{" "}
+        Time left = {timeLeftHours}:{timeLeftMinutes}:{timeLeftSeconds}
       </p>
     );
   }

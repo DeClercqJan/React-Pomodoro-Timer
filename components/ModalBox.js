@@ -1,22 +1,21 @@
 import React from "react";
 
 class ModalBox extends React.Component {
-  render() {
-/*     let stateAll = this.props.stateAll;
-    
-    let timeLeftNumber = stateAll.timeLeftNumber;
-    let timeZero = stateAll.timeZero;
-    let timeZeroNumber = timeZero.getTime();
-    let timeLeftDate = new Date(timeZeroNumber + timeLeftNumber);
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-    let timeLeftHours = timeLeftDate.getHours();
-    let timeLeftMinutes = timeLeftDate.getMinutes();
-    let timeLeftSeconds = timeLeftDate.getSeconds(); */
+  handleChange() {
+    this.props.resetTimerLowerLevel();
+  }
+
+  render() {
     return (
-        <p>test modalbox</p>
-/*       <p>
-        Time left = {timeLeftHours}:{timeLeftMinutes}:{timeLeftSeconds}
-      </p> */
+      <div className="ModalBox">
+        <p>Take a break!</p>
+        <button onClick={this.handleChange}>Start new timer</button>
+      </div>
     );
   }
 }

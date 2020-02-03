@@ -31730,35 +31730,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"components/Header.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import ParcelLogo from "../img/parcel-logo.svg";
-var Header = function Header() {
-  return _react.default.createElement("header", null, _react.default.createElement("nav", {
-    className: "navbar",
-    role: "navigation",
-    "aria-label": "main navigation"
-  }, _react.default.createElement("div", {
-    className: "navbar-brand"
-  }, _react.default.createElement("a", {
-    className: "navbar-item",
-    href: "/"
-  }, "                "))));
-};
-
-var _default = Header;
-exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"components/Timer.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"components/Timer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31841,9 +31813,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -31854,30 +31826,29 @@ var ModalBox =
 function (_React$Component) {
   _inherits(ModalBox, _React$Component);
 
-  function ModalBox() {
+  function ModalBox(props) {
+    var _this;
+
     _classCallCheck(this, ModalBox);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ModalBox).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ModalBox).call(this, props));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(ModalBox, [{
+    key: "handleChange",
+    value: function handleChange() {
+      this.props.resetTimerLowerLevel();
+    }
+  }, {
     key: "render",
     value: function render() {
-      /*     let stateAll = this.props.stateAll;
-          
-          let timeLeftNumber = stateAll.timeLeftNumber;
-          let timeZero = stateAll.timeZero;
-          let timeZeroNumber = timeZero.getTime();
-          let timeLeftDate = new Date(timeZeroNumber + timeLeftNumber);
-      
-          let timeLeftHours = timeLeftDate.getHours();
-          let timeLeftMinutes = timeLeftDate.getMinutes();
-          let timeLeftSeconds = timeLeftDate.getSeconds(); */
-      return _react.default.createElement("p", null, "test modalbox")
-      /*       <p>
-              Time left = {timeLeftHours}:{timeLeftMinutes}:{timeLeftSeconds}
-            </p> */
-      ;
+      return _react.default.createElement("div", {
+        className: "ModalBox"
+      }, _react.default.createElement("p", null, "Take a break!"), _react.default.createElement("button", {
+        onClick: this.handleChange
+      }, "Start new timer"));
     }
   }]);
 
@@ -31886,18 +31857,90 @@ function (_React$Component) {
 
 var _default = ModalBox;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"src/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"scss/index.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"src/index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var _Header = _interopRequireDefault(require("../components/Header"));
-
 var _Timer = _interopRequireDefault(require("../components/Timer"));
 
 var _ModalBox = _interopRequireDefault(require("../components/ModalBox"));
+
+require("../scss/index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32014,9 +32057,9 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       console.log(this.state.timerRunning);
-      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, this.state.timerEnded ? _react.default.createElement(_ModalBox.default, null) : _react.default.createElement(_Timer.default, {
+      return _react.default.createElement("main", null, _react.default.createElement("h1", null, "Pomodore Timer, built with React"), !this.state.timerEnded ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Timer.default, {
         stateAll: this.state
-      })), !this.state.timerRunning ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
+      }), !this.state.timerRunning ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
         onClick: this.startTimer
       }, "Start timer"), _react.default.createElement("button", {
         onClick: this.addMinute
@@ -32024,7 +32067,9 @@ function (_React$Component) {
         onClick: this.subtractMinute
       }, "-1 minute")) : _react.default.createElement("button", {
         onClick: this.resetTimer
-      }, "Reset timer"));
+      }, "Reset timer")) : _react.default.createElement(_ModalBox.default, {
+        resetTimerLowerLevel: this.resetTimer
+      }));
     }
   }]);
 
@@ -32034,7 +32079,7 @@ function (_React$Component) {
 var App_html = document.getElementById("app");
 
 _reactDom.default.render(_react.default.createElement(App, null), App_html);
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","../components/Header":"components/Header.js","../components/Timer":"components/Timer.js","../components/ModalBox":"components/ModalBox.js"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","../components/Timer":"components/Timer.js","../components/ModalBox":"components/ModalBox.js","../scss/index.css":"scss/index.css"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

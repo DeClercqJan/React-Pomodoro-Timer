@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import Header from "../components/Header";
 import Timer from "../components/Timer";
 import ModalBox from "../components/ModalBox";
+import "../scss/index.css"
 
 // original time (in 1970) starts at 1 o clock so had to reset this
 let time0 = new Date(0);
@@ -19,7 +19,7 @@ class App extends React.Component {
       // timeOriginal: time,
       // timePlusAmount: timePlusAmount,
       // timeNow: time,
-      timeLeftNumber:  60 * 1000,
+      timeLeftNumber: 60 * 1000,
       timeZero: time0,
       timerRunning: false,
       timerEnded: false
@@ -77,25 +77,25 @@ class App extends React.Component {
   render() {
     console.log(this.state.timerRunning);
     return (
-      <div>
-        <Header />
         <main>
-        {this.state.timerEnded ? (
-             <ModalBox/>
+          <h1>Pomodore Timer, built with React</h1>
+          {!this.state.timerEnded ? (
+            <React.Fragment>
+              <Timer stateAll={this.state} />
+              {!this.state.timerRunning ? (
+                <React.Fragment>
+                  <button onClick={this.startTimer}>Start timer</button>
+                  <button onClick={this.addMinute}>+1 minute</button>
+                  <button onClick={this.subtractMinute}>-1 minute</button>
+                </React.Fragment>
+              ) : (
+                <button onClick={this.resetTimer}>Reset timer</button>
+              )}
+            </React.Fragment>
           ) : (
-            <Timer stateAll={this.state} />
+            <ModalBox resetTimerLowerLevel={this.resetTimer} />
           )}
         </main>
-        {!this.state.timerRunning ? (
-          <React.Fragment>
-            <button onClick={this.startTimer}>Start timer</button>
-            <button onClick={this.addMinute}>+1 minute</button>
-            <button onClick={this.subtractMinute}>-1 minute</button>
-          </React.Fragment>
-        ) : (
-          <button onClick={this.resetTimer}>Reset timer</button>
-        )}
-      </div>
     );
   }
 }

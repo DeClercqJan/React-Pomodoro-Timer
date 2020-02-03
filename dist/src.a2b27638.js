@@ -31946,15 +31946,15 @@ function (_React$Component) {
       console.log(this.state.timerRunning);
       return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, _react.default.createElement(_Timer.default, {
         stateAll: this.state
-      })), !this.state.timerRunning ? _react.default.createElement("button", {
+      })), !this.state.timerRunning ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
         onClick: this.startTimer
-      }, "Start timer") : _react.default.createElement("button", {
-        onClick: this.resetTimer
-      }, "Reset timer"), _react.default.createElement("button", {
+      }, "Start timer"), _react.default.createElement("button", {
         onClick: this.addMinute
       }, "+1 minute"), _react.default.createElement("button", {
         onClick: this.subtractMinute
-      }, "-1 minute"));
+      }, "-1 minute")) : _react.default.createElement("button", {
+        onClick: this.resetTimer
+      }, "Reset timer"));
     }
   }]);
 

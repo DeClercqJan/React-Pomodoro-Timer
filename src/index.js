@@ -80,12 +80,14 @@ class App extends React.Component {
           <Timer stateAll={this.state} />
         </main>
         {!this.state.timerRunning ? (
-          <button onClick={this.startTimer}>Start timer</button>
+          <React.Fragment>
+            <button onClick={this.startTimer}>Start timer</button>
+            <button onClick={this.addMinute}>+1 minute</button>
+            <button onClick={this.subtractMinute}>-1 minute</button>
+          </React.Fragment>
         ) : (
           <button onClick={this.resetTimer}>Reset timer</button>
         )}
-        <button onClick={this.addMinute}>+1 minute</button>
-        <button onClick={this.subtractMinute}>-1 minute</button>
       </div>
     );
   }

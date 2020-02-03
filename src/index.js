@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import Timer from "/React-Pomodoro-Timer/components/Timer";
-import ModalBox from "/React-Pomodoro-Timer/components/ModalBox";
-import "/React-Pomodoro-Timer/css/index.css";
+import Timer from "../components/Timer";
+import ModalBox from "../components/ModalBox";
+import "../css/index.css";
 
 // original time (in 1970) starts at 1 o clock so had to reset this
 let time0 = new Date(0);
@@ -98,7 +98,6 @@ class App extends React.Component {
             {!this.state.timerRunning ? (
               <React.Fragment>
                 <button value={this.state.valueChangingButton} onClick={this.changingButton}>{this.state.valueChangingButton} timer</button>
-                <button onClick={this.startTimer}>Start timer</button>
                 <button onClick={this.addMinute}>+1 minute</button>
                 <button onClick={this.subtractMinute}>-1 minute</button>
               </React.Fragment>

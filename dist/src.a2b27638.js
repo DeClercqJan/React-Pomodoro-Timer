@@ -32077,8 +32077,6 @@ function (_React$Component) {
         value: this.state.valueChangingButton,
         onClick: this.changingButton
       }, this.state.valueChangingButton, " timer"), _react.default.createElement("button", {
-        onClick: this.startTimer
-      }, "Start timer"), _react.default.createElement("button", {
         onClick: this.addMinute
       }, "+1 minute"), _react.default.createElement("button", {
         onClick: this.subtractMinute
@@ -32124,7 +32122,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44259" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43439" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

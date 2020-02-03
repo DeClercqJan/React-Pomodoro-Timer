@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import Header from "../components/Header";
 import Timer from "../components/Timer";
+import ModalBox from "../components/ModalBox";
 
 // original time (in 1970) starts at 1 o clock so had to reset this
 let time0 = new Date(0);
@@ -80,7 +81,7 @@ class App extends React.Component {
         <Header />
         <main>
         {this.state.timerEnded ? (
-             <p>take a break!</p>
+             <ModalBox/>
           ) : (
             <Timer stateAll={this.state} />
           )}

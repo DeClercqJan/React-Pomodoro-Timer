@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import Timer from "../components/Timer";
-import ModalBox from "../components/ModalBox";
-import "../scss/index.css";
+import Timer from "/components/Timer";
+import ModalBox from "/components/ModalBox";
+import "/css/index.css";
 
 // original time (in 1970) starts at 1 o clock so had to reset this
 let time0 = new Date(0);
@@ -48,16 +48,16 @@ class App extends React.Component {
   changingButton(event) {
     console.log(event.target.value);
     if (event.target.value === "start") {
-      startTimer();
       this.setState({
         valueChangingButton: "reset",
       })
+      this.startTimer();
     }
     else if (event.target.value === "reset") {
-      resetTimer();
       this.setState({
         valueChangingButton: "start",
       })
+      this.resetTimer();
     }
   }
 

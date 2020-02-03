@@ -14,6 +14,7 @@
 - tried to have clean/readable code
 
 ## to do's
+- improve package.json file (in order to deploy live, I had to change the file paths manually on gh-pages branch due to bad directory/path referencing.)
 - break down things in even smaller components
 - styling as always
 - close window button maybe (chose not to do it now, due to the fact that I don't want to open the modal box in a new window and even then not all browsers support the window.close function. So no added value by including it)

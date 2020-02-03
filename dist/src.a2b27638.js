@@ -31855,10 +31855,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 // original time (in 1970) starts at 1 o clock so had to reset this
-var time0 = new Date(0);
-console.log(time0);
-new Date(time0.setHours(0));
-console.log(time0);
+var time0 = new Date(0); // console.log(time0);
+
+new Date(time0.setHours(0)); // console.log(time0);
 
 var App =
 /*#__PURE__*/
@@ -31877,10 +31876,10 @@ function (_React$Component) {
       // timeOriginal: time,
       // timePlusAmount: timePlusAmount,
       // timeNow: time,
-      timeLeftNumber: 20 * 60 * 1000,
+      timeLeftNumber: 60 * 1000,
       timeZero: time0,
-      timerRunning: false // timerEnded: false
-
+      timerRunning: false,
+      timerEnded: false
     };
     _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_this));
     _this.resetTimer = _this.resetTimer.bind(_assertThisInitialized(_this));
@@ -31908,7 +31907,8 @@ function (_React$Component) {
       clearInterval(this.timerID);
       this.setState({
         timeLeftNumber: 20 * 60 * 1000,
-        timerRunning: false
+        timerRunning: false,
+        timerEnded: false
       });
     }
   }, {
@@ -31919,10 +31919,11 @@ function (_React$Component) {
       }); // CHECKS WHETHER TIMER HAS REACHED END
 
       if (this.state.timeLeftNumber <= 0) {
-        console.log("great succes!");
+        // console.log("great succes!");
         clearInterval(this.timerID);
         this.setState({
-          timeLeftNumber: 0
+          timeLeftNumber: 0,
+          timerEnded: true
         });
       }
     }
@@ -31944,7 +31945,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       console.log(this.state.timerRunning);
-      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, _react.default.createElement(_Timer.default, {
+      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, this.state.timerEnded ? _react.default.createElement("p", null, "take a break!") : _react.default.createElement(_Timer.default, {
         stateAll: this.state
       })), !this.state.timerRunning ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
         onClick: this.startTimer

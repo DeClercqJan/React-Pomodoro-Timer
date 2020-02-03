@@ -5,9 +5,9 @@ import Timer from "../components/Timer";
 
 // original time (in 1970) starts at 1 o clock so had to reset this
 let time0 = new Date(0);
-console.log(time0);
+// console.log(time0);
 new Date(time0.setHours(0));
-console.log(time0);
+// console.log(time0);
 
 class App extends React.Component {
   constructor(props) {
@@ -18,10 +18,10 @@ class App extends React.Component {
       // timeOriginal: time,
       // timePlusAmount: timePlusAmount,
       // timeNow: time,
-      timeLeftNumber: 20 * 60 * 1000,
+      timeLeftNumber:  60 * 1000,
       timeZero: time0,
-      timerRunning: false
-      // timerEnded: false
+      timerRunning: false,
+      timerEnded: false
     };
     this.startTimer = this.startTimer.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
@@ -41,7 +41,8 @@ class App extends React.Component {
     clearInterval(this.timerID);
     this.setState({
       timeLeftNumber: 20 * 60 * 1000,
-      timerRunning: false
+      timerRunning: false,
+      timerEnded: false
     });
   }
 
@@ -51,10 +52,11 @@ class App extends React.Component {
     });
     // CHECKS WHETHER TIMER HAS REACHED END
     if (this.state.timeLeftNumber <= 0) {
-      console.log("great succes!");
+      // console.log("great succes!");
       clearInterval(this.timerID);
       this.setState({
-        timeLeftNumber: 0
+        timeLeftNumber: 0,
+        timerEnded: true
       });
     }
   }
@@ -77,7 +79,11 @@ class App extends React.Component {
       <div>
         <Header />
         <main>
-          <Timer stateAll={this.state} />
+        {this.state.timerEnded ? (
+             <p>take a break!</p>
+          ) : (
+            <Timer stateAll={this.state} />
+          )}
         </main>
         {!this.state.timerRunning ? (
           <React.Fragment>

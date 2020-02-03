@@ -31878,23 +31878,18 @@ function (_React$Component) {
       // timePlusAmount: timePlusAmount,
       // timeNow: time,
       timeLeftNumber: 20 * 60 * 1000,
-      timeZero: time0 // timerRunning: false
-      // timerEnded: false
+      timeZero: time0,
+      timerRunning: false // timerEnded: false
 
     };
     _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_this));
     _this.resetTimer = _this.resetTimer.bind(_assertThisInitialized(_this));
-    _this.stopTimer = _this.stopTimer.bind(_assertThisInitialized(_this));
     _this.addMinute = _this.addMinute.bind(_assertThisInitialized(_this));
     _this.subtractMinute = _this.subtractMinute.bind(_assertThisInitialized(_this));
     return _this;
-  } // will fire on 1st build
-
+  }
 
   _createClass(App, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {}
-  }, {
     key: "startTimer",
     value: function startTimer() {
       var _this2 = this;
@@ -31903,31 +31898,19 @@ function (_React$Component) {
       this.timerID = setInterval(function () {
         return _this2.tick();
       }, 1000);
+      this.setState({
+        timerRunning: true
+      });
     }
   }, {
     key: "resetTimer",
     value: function resetTimer() {
       clearInterval(this.timerID);
       this.setState({
-        timeLeftNumber: 60 * 1000
+        timeLeftNumber: 20 * 60 * 1000,
+        timerRunning: false
       });
     }
-  }, {
-    key: "stopTimer",
-    value: function stopTimer() {
-      clearInterval(this.timerID);
-    } // will fire on 2nd build and after
-    // PROBLEM: fires too many times and takes too much memory space if I add . Crashes thing sometimes
-    // https://reactjs.org/docs/state-and-lifecycle.html:
-    // You may call setState() immediately in componentDidUpdate() but note that it must be wrapped in a condition like in the example above, or you’ll cause an infinite loop. It would also cause an extra re-rendering which, while not visible to the user, can affect the component performance.
-
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {} // needs to called as I understand it
-
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {}
   }, {
     key: "tick",
     value: function tick() {
@@ -31960,15 +31943,14 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log(this.state.timerRunning);
       return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement("main", null, _react.default.createElement(_Timer.default, {
         stateAll: this.state
-      })), _react.default.createElement("button", {
+      })), !this.state.timerRunning ? _react.default.createElement("button", {
         onClick: this.startTimer
-      }, "Start timer"), _react.default.createElement("button", {
+      }, "Start timer") : _react.default.createElement("button", {
         onClick: this.resetTimer
       }, "Reset timer"), _react.default.createElement("button", {
-        onClick: this.stopTimer
-      }, "Stop timer"), _react.default.createElement("button", {
         onClick: this.addMinute
       }, "+1 minute"), _react.default.createElement("button", {
         onClick: this.subtractMinute
@@ -32010,7 +31992,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36743" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38739" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

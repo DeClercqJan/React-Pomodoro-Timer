@@ -20,43 +20,30 @@ class App extends React.Component {
       // timeNow: time,
       timeLeftNumber: 20 * 60 * 1000,
       timeZero: time0,
-      // timerRunning: false
+      timerRunning: false
       // timerEnded: false
     };
     this.startTimer = this.startTimer.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
     this.addMinute = this.addMinute.bind(this);
     this.subtractMinute = this.subtractMinute.bind(this);
   }
 
-  // will fire on 1st build
-  componentDidMount() {}
-
   startTimer() {
     // question: why timer? To not overload browser?
     this.timerID = setInterval(() => this.tick(), 1000);
+    this.setState({
+      timerRunning: true
+    });
   }
 
   resetTimer() {
     clearInterval(this.timerID);
     this.setState({
-      timeLeftNumber: 60 * 1000,
+      timeLeftNumber: 20 * 60 * 1000,
+      timerRunning: false
     });
   }
-
-  stopTimer() {
-    clearInterval(this.timerID);
-  }
-
-  // will fire on 2nd build and after
-  // PROBLEM: fires too many times and takes too much memory space if I add . Crashes thing sometimes
-  // https://reactjs.org/docs/state-and-lifecycle.html:
-  // You may call setState() immediately in componentDidUpdate() but note that it must be wrapped in a condition like in the example above, or you’ll cause an infinite loop. It would also cause an extra re-rendering which, while not visible to the user, can affect the component performance.
-  componentDidUpdate() {}
-
-  // needs to called as I understand it
-  componentWillUnmount() {}
 
   tick() {
     this.setState({
@@ -74,26 +61,29 @@ class App extends React.Component {
 
   addMinute() {
     this.setState({
-      timeLeftNumber: this.state.timeLeftNumber + (60 * 1000)
+      timeLeftNumber: this.state.timeLeftNumber + 60 * 1000
     });
   }
 
   subtractMinute() {
     this.setState({
-      timeLeftNumber: this.state.timeLeftNumber - (60 * 1000)
+      timeLeftNumber: this.state.timeLeftNumber - 60 * 1000
     });
   }
 
   render() {
+    console.log(this.state.timerRunning);
     return (
       <div>
         <Header />
         <main>
           <Timer stateAll={this.state} />
         </main>
-        <button onClick={this.startTimer}>Start timer</button>
-        <button onClick={this.resetTimer}>Reset timer</button>
-        <button onClick={this.stopTimer}>Stop timer</button>
+        {!this.state.timerRunning ? (
+          <button onClick={this.startTimer}>Start timer</button>
+        ) : (
+          <button onClick={this.resetTimer}>Reset timer</button>
+        )}
         <button onClick={this.addMinute}>+1 minute</button>
         <button onClick={this.subtractMinute}>-1 minute</button>
       </div>

@@ -1,0 +1,1 @@
+{"version":3,"sources":["css/index.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA","file":"src.a2b27638.css","sourceRoot":"..","sourcesContent":["h1 {\n  font-size: 2rem;\n}\n\n.ModalBox {\n  border: 1px solid black\n}"]}

@@ -1,3 +1,25 @@
+# React-Pomodoro-Timer
+
+## basic idea
+- timer that counts down the seconds and displays message on completion. Timer time can be modified and reset.
+- BeCode React JavaScript challenge 
+
+## implementation
+- used class components (instead of hooks)
+- moved state up to re-use already existing reset function at the App level
+- numeric counter in state for countdown and ease of use (compared to working with date objects)
+- interval and clearInterval of 1000 to have function fire every second
+- established 'absolute' zero time as a base to add timer time to in order to calcute and display also hours
+- condtionally displayed certain blocks on the basis of parameters set in state
+- tried to have clean/readable code
+
+## to do's
+- break down things in even smaller components
+- styling as always
+- close window button maybe (chose not to do it now, due to the fact that I don't want to open the modal box in a new window and even then not all browsers support the window.close function. So no added value by including it)
+
+# ORIGINAL ASSIGNMENT BELOW
+
 # React Pomodoro
 
 > A simple pomodoro timer, with React

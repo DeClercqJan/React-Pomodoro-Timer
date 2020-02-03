@@ -31984,19 +31984,17 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props)); // 1000 = 1 second. 60 seconds in a minute. And it's 20 times a minute
 
     _this.state = {
-      // renderCounter: 0,
-      // timeOriginal: time,
-      // timePlusAmount: timePlusAmount,
-      // timeNow: time,
-      timeLeftNumber: 60 * 1000,
+      timeLeftNumber: 20 * 60 * 1000,
       timeZero: time0,
       timerRunning: false,
-      timerEnded: false
+      timerEnded: false,
+      valueChangingButton: "start"
     };
     _this.startTimer = _this.startTimer.bind(_assertThisInitialized(_this));
     _this.resetTimer = _this.resetTimer.bind(_assertThisInitialized(_this));
     _this.addMinute = _this.addMinute.bind(_assertThisInitialized(_this));
     _this.subtractMinute = _this.subtractMinute.bind(_assertThisInitialized(_this));
+    _this.changingButton = _this.changingButton.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -32022,6 +32020,23 @@ function (_React$Component) {
         timerRunning: false,
         timerEnded: false
       });
+    }
+  }, {
+    key: "changingButton",
+    value: function changingButton(event) {
+      console.log(event.target.value);
+
+      if (event.target.value === "start") {
+        startTimer();
+        this.setState({
+          valueChangingButton: "reset"
+        });
+      } else if (event.target.value === "reset") {
+        resetTimer();
+        this.setState({
+          valueChangingButton: "start"
+        });
+      }
     }
   }, {
     key: "tick",
@@ -32056,10 +32071,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state.timerRunning);
       return _react.default.createElement("main", null, _react.default.createElement("h1", null, "Pomodore Timer, built with React"), !this.state.timerEnded ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_Timer.default, {
         stateAll: this.state
       }), !this.state.timerRunning ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("button", {
+        value: this.state.valueChangingButton,
+        onClick: this.changingButton
+      }, this.state.valueChangingButton, " timer"), _react.default.createElement("button", {
         onClick: this.startTimer
       }, "Start timer"), _react.default.createElement("button", {
         onClick: this.addMinute
@@ -32107,7 +32124,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38739" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34501" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

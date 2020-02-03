@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import Timer from "../components/Timer";
 import ModalBox from "../components/ModalBox";
-import "../scss/index.css"
+import "../scss/index.css";
 
 // original time (in 1970) starts at 1 o clock so had to reset this
 let time0 = new Date(0);
@@ -15,19 +15,17 @@ class App extends React.Component {
     super(props);
     // 1000 = 1 second. 60 seconds in a minute. And it's 20 times a minute
     this.state = {
-      // renderCounter: 0,
-      // timeOriginal: time,
-      // timePlusAmount: timePlusAmount,
-      // timeNow: time,
-      timeLeftNumber: 60 * 1000,
+      timeLeftNumber: 20 * 60 * 1000,
       timeZero: time0,
       timerRunning: false,
-      timerEnded: false
+      timerEnded: false,
+      valueChangingButton: "start"
     };
     this.startTimer = this.startTimer.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
     this.addMinute = this.addMinute.bind(this);
     this.subtractMinute = this.subtractMinute.bind(this);
+    this.changingButton = this.changingButton.bind(this);
   }
 
   startTimer() {
@@ -45,6 +43,22 @@ class App extends React.Component {
       timerRunning: false,
       timerEnded: false
     });
+  }
+
+  changingButton(event) {
+    console.log(event.target.value);
+    if (event.target.value === "start") {
+      startTimer();
+      this.setState({
+        valueChangingButton: "reset",
+      })
+    }
+    else if (event.target.value === "reset") {
+      resetTimer();
+      this.setState({
+        valueChangingButton: "start",
+      })
+    }
   }
 
   tick() {
@@ -75,27 +89,27 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.timerRunning);
     return (
-        <main>
-          <h1>Pomodore Timer, built with React</h1>
-          {!this.state.timerEnded ? (
-            <React.Fragment>
-              <Timer stateAll={this.state} />
-              {!this.state.timerRunning ? (
-                <React.Fragment>
-                  <button onClick={this.startTimer}>Start timer</button>
-                  <button onClick={this.addMinute}>+1 minute</button>
-                  <button onClick={this.subtractMinute}>-1 minute</button>
-                </React.Fragment>
-              ) : (
-                <button onClick={this.resetTimer}>Reset timer</button>
-              )}
-            </React.Fragment>
-          ) : (
-            <ModalBox resetTimerLowerLevel={this.resetTimer} />
-          )}
-        </main>
+      <main>
+        <h1>Pomodore Timer, built with React</h1>
+        {!this.state.timerEnded ? (
+          <React.Fragment>
+            <Timer stateAll={this.state} />
+            {!this.state.timerRunning ? (
+              <React.Fragment>
+                <button value={this.state.valueChangingButton} onClick={this.changingButton}>{this.state.valueChangingButton} timer</button>
+                <button onClick={this.startTimer}>Start timer</button>
+                <button onClick={this.addMinute}>+1 minute</button>
+                <button onClick={this.subtractMinute}>-1 minute</button>
+              </React.Fragment>
+            ) : (
+              <button onClick={this.resetTimer}>Reset timer</button>
+            )}
+          </React.Fragment>
+        ) : (
+          <ModalBox resetTimerLowerLevel={this.resetTimer} />
+        )}
+      </main>
     );
   }
 }
